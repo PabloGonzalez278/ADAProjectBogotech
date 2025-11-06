@@ -21,10 +21,30 @@ dist/
 .idea/
 *.swp
 *.swo
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# GitHub Copilot
+.copilot/
+*.copilot*
+copilot-*.json
+.github/copilot/
+
+# JetBrains IDEs (PyCharm, IntelliJ, etc)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # LaTeX
 *.aux
@@ -33,7 +53,14 @@ Thumbs.db
 *.toc
 *.pdf
 *.synctex.gz
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
 
 # Datos temporales
 *.tmp
+*.bak
+*.swp
+*~
 
