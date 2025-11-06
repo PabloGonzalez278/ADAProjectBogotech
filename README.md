@@ -1265,17 +1265,14 @@ Este proyecto integra:
 
 ---
 
-##  Autores
-Santiago Mesa 
-Juliana Lugo
-Juan Diego Arias
-Pablo Gonzalez
+## 👥 Autores
 
 **Proyecto Final - Análisis de Algoritmos**  
-Universidad: *Pontificia Universidad Javeriana*  
+Universidad: Ponticia Universidad Javeriana Bogotá  
+Autores: Pablo Gonzales, Juliana Lugo, Juan Diego Arias y Santiago Mesa
 Curso: Análisis de Algoritmos  
 Instructor: Andrés Oswaldo Calderón Romero, Ph.D.  
-Fecha:  6 de Noviembre 2025
+Fecha: Noviembre 2025
 
 ---
 
