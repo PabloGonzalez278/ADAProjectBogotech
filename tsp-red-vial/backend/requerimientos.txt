@@ -1,2 +1,30 @@
-# Dependencias de Python
+# Dependencias de Python para el proyecto TSP en Redes Viales
+
+# Framework Web
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# Manejo de Grafos y Algoritmos
+networkx>=3.2
+
+# Geometría Computacional y GIS
+shapely>=2.0.0
+geojson>=3.0.0
+
+# Validación de Datos
+pydantic>=2.5.0
+pydantic-settings>=2.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+
+# Utilidades
+python-dotenv>=1.0.0
+numpy>=1.24.0
+
+# Opcionales (instalar si es necesario)
+# rtree>=1.0.0  # Para índice espacial R-tree (requiere libspatialindex)
+# pyproj>=3.6.0  # Para transformaciones de coordenadas (requiere PROJ)
 

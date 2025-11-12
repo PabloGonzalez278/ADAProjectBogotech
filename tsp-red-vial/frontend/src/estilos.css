@@ -1,2 +1,440 @@
-/* Estilos basicos */
+/**
+ * Estilos CSS para la aplicación de optimización de rutas TSP.
+ * Define el diseño, colores y comportamiento visual de todos los componentes.
+ */
+
+/* Variables globales de color y espaciado */
+:root {
+  --color-primario: #2563eb;
+  --color-primario-hover: #1d4ed8;
+  --color-secundario: #64748b;
+  --color-exito: #22c55e;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+  --color-fondo: #f8fafc;
+  --color-texto: #1e293b;
+  --color-borde: #e2e8f0;
+  --espaciado-base: 1rem;
+  --radio-borde: 0.5rem;
+  --sombra: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Reseteo y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  line-height: 1.6;
+}
+
+/* Encabezado principal */
+.encabezado {
+  background-color: white;
+  padding: var(--espaciado-base);
+  box-shadow: var(--sombra);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.encabezado h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primario);
+}
+
+.estado-sistema {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.indicador {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radio-borde);
+  font-weight: 600;
+}
+
+.indicador.conectado {
+  background-color: var(--color-exito);
+  color: white;
+}
+
+.indicador.desconectado {
+  background-color: var(--color-error);
+  color: white;
+}
+
+/* Contenedor principal con layout de dos columnas */
+.contenedor-principal {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  height: calc(100vh - 130px);
+  gap: 0;
+}
+
+/* Panel de control lateral */
+.panel-control {
+  background-color: white;
+  padding: var(--espaciado-base);
+  overflow-y: auto;
+  border-right: 1px solid var(--color-borde);
+}
+
+.seccion-control {
+  margin-bottom: calc(var(--espaciado-base) * 1.5);
+  padding-bottom: var(--espaciado-base);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.seccion-control:last-child {
+  border-bottom: none;
+}
+
+.seccion-control h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-primario);
+}
+
+.descripcion {
+  font-size: 0.875rem;
+  color: var(--color-secundario);
+  margin-bottom: var(--espaciado-base);
+}
+
+.nota {
+  font-size: 0.75rem;
+  color: var(--color-secundario);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Grupo de archivo con input y botón */
+.grupo-archivo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-archivo {
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+}
+
+/* Estilos de botones */
+.boton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radio-borde);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.boton-primario {
+  background-color: var(--color-primario);
+  color: white;
+}
+
+.boton-primario:hover:not(:disabled) {
+  background-color: var(--color-primario-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.boton-secundario {
+  background-color: var(--color-secundario);
+  color: white;
+}
+
+.boton-secundario:hover:not(:disabled) {
+  background-color: #475569;
+}
+
+.boton-evaluar {
+  background-color: var(--color-exito);
+  font-size: 1rem;
+}
+
+.boton-evaluar:hover:not(:disabled) {
+  background-color: #16a34a;
+}
+
+.boton-grande {
+  padding: 1rem 1.5rem;
+}
+
+.boton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Grupo de checkboxes */
+.grupo-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--radio-borde);
+  transition: background-color 0.2s;
+}
+
+.checkbox-label:hover {
+  background-color: var(--color-fondo);
+}
+
+.checkbox-algoritmo {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}
+
+.info-algoritmo {
+  font-size: 0.75rem;
+  color: var(--color-secundario);
+  margin-left: auto;
+}
+
+/* Área del mapa */
+.area-mapa {
+  position: relative;
+  background-color: #e5e7eb;
+}
+
+.mapa {
+  width: 100%;
+  height: 100%;
+}
+
+/* Leyenda del mapa */
+.leyenda {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: var(--radio-borde);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.leyenda h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-texto);
+}
+
+.item-leyenda {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.color-muestra {
+  width: 1.5rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-borde);
+}
+
+/* Sección de resultados */
+.seccion-resultados {
+  margin-top: var(--espaciado-base);
+  padding: var(--espaciado-base);
+  background-color: var(--color-fondo);
+  border-radius: var(--radio-borde);
+}
+
+.seccion-resultados h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-primario);
+}
+
+.tabla-resultados {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.tabla-resultados th,
+.tabla-resultados td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.tabla-resultados th {
+  background-color: white;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.tabla-resultados tr:hover {
+  background-color: white;
+}
+
+/* Spinner de carga */
+.spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.spinner-contenido {
+  background-color: white;
+  padding: 2rem;
+  border-radius: var(--radio-borde);
+  text-align: center;
+}
+
+.spinner-animacion {
+  border: 4px solid var(--color-fondo);
+  border-top: 4px solid var(--color-primario);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: girar 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes girar {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Contenedor de mensajes */
+.contenedor-mensajes {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.mensaje {
+  padding: 1rem;
+  border-radius: var(--radio-borde);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: deslizar-entrada 0.3s ease-out;
+}
+
+@keyframes deslizar-entrada {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.mensaje-exito {
+  background-color: var(--color-exito);
+  color: white;
+}
+
+.mensaje-error {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.mensaje-info {
+  background-color: var(--color-info);
+  color: white;
+}
+
+/* Popups de Leaflet personalizados */
+.popup-red,
+.popup-punto,
+.popup-ruta {
+  font-size: 0.875rem;
+}
+
+.popup-red strong,
+.popup-punto strong,
+.popup-ruta strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--color-primario);
+}
+
+/* Números de visita en el mapa */
+.numero-visita {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Pie de página */
+.pie-pagina {
+  background-color: white;
+  padding: var(--espaciado-base);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-secundario);
+  border-top: 1px solid var(--color-borde);
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 1024px) {
+  .contenedor-principal {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .panel-control {
+    border-right: none;
+    border-bottom: 1px solid var(--color-borde);
+  }
+
+  .area-mapa {
+    height: 500px;
+  }
+
+  .leyenda {
+    top: auto;
+    bottom: 1rem;
+  }
+}
 

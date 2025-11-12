@@ -1,0 +1,20 @@
+{
+  "name": "tsp-red-vial-frontend",
+  "version": "1.0.0",
+  "description": "Frontend para sistema de optimización de rutas TSP",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.8",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.7"
+  }
+}
+

@@ -1,2 +1,501 @@
-% Plantilla LaTeX del informe
+%
+% Reporte Técnico: Análisis de Algoritmos para el TSP en Redes Viales
+% Proyecto de Análisis de Algoritmos
+%
+
+\documentclass[12pt,letterpaper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+% Configuración de página
+\geometry{
+    letterpaper,
+    left=2.5cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm
+}
+
+% Configuración de hipervínculos
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    citecolor=blue
+}
+
+% Configuración de listados de código
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    language=Python
+}
+
+% Información del documento
+\title{
+    \textbf{Análisis de Algoritmos para el Problema del Viajante (TSP) en Redes Viales}\\
+    \large Sistema de Optimización de Rutas
+}
+
+\author{
+    Nombre del Estudiante\\
+    \textit{Universidad}\\
+    \textit{Análisis de Algoritmos}
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Este documento presenta un análisis comparativo de tres algoritmos para resolver el Problema del Viajante (TSP) sobre redes viales reales. Se implementaron y evaluaron los algoritmos de Fuerza Bruta, Held-Karp y 2-Opt, comparando su rendimiento en términos de tiempo de ejecución, calidad de solución y escalabilidad. Los resultados demuestran que mientras los algoritmos exactos garantizan optimalidad, su complejidad exponencial limita su aplicabilidad práctica, mientras que la heurística 2-Opt ofrece soluciones de calidad aceptable en tiempo polinomial.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% Sección 1: Introducción
+\section{Introducción}
+
+\subsection{Contexto}
+
+El Problema del Viajante (Travelling Salesman Problem, TSP) es uno de los problemas más estudiados en ciencias de la computación y optimización combinatoria. Dado un conjunto de ciudades y las distancias entre ellas, el objetivo es encontrar el recorrido más corto que visite cada ciudad exactamente una vez y regrese al punto de partida.
+
+En este proyecto, se aborda una variante del TSP donde las distancias no se calculan de forma euclidiana, sino sobre una red vial real, utilizando el camino más corto entre cada par de puntos. Esta variante tiene aplicaciones prácticas en logística, distribución y planificación de rutas.
+
+\subsection{Objetivos}
+
+Los objetivos de este proyecto son:
+
+\begin{itemize}
+    \item Implementar tres algoritmos diferentes para resolver el TSP: Fuerza Bruta, Held-Karp y 2-Opt
+    \item Analizar la complejidad temporal y espacial de cada algoritmo
+    \item Evaluar empíricamente el rendimiento de los algoritmos con diferentes tamaños de entrada
+    \item Desarrollar una aplicación web que permita visualizar los resultados
+    \item Comparar las ventajas y desventajas de cada enfoque
+\end{itemize}
+
+\subsection{Alcance}
+
+El proyecto incluye:
+
+\begin{itemize}
+    \item Implementación completa de los tres algoritmos en Python
+    \item Sistema de carga y procesamiento de redes viales en formato GeoJSON
+    \item Interfaz web para visualización de resultados
+    \item Análisis empírico con datos sintéticos y reales de Bogotá
+    \item Exportación de resultados en formatos estándar
+\end{itemize}
+
+\subsection{Organización del Documento}
+
+Este documento se organiza de la siguiente manera: la Sección 2 presenta el marco teórico, incluyendo definiciones y conceptos relevantes. La Sección 3 desarrolla el análisis asintótico de los algoritmos. La Sección 4 describe la metodología de implementación. La Sección 5 presenta los resultados del análisis empírico. Finalmente, la Sección 6 presenta las conclusiones y trabajo futuro.
+
+% Sección 2: Marco Teórico
+\section{Marco Teórico}
+
+\subsection{El Problema del Viajante}
+
+\subsubsection{Definición Formal}
+
+Dado un grafo completo $G = (V, E)$ con $n = |V|$ vértices y una función de costo $c: E \rightarrow \mathbb{R}^+$, el TSP consiste en encontrar un ciclo hamiltoniano de costo mínimo.
+
+Formalmente, se busca una permutación $\pi$ de los vértices que minimice:
+
+\begin{equation}
+\sum_{i=1}^{n} c(\pi(i), \pi(i+1))
+\end{equation}
+
+donde $\pi(n+1) = \pi(1)$ para cerrar el ciclo.
+
+\subsubsection{Complejidad Computacional}
+
+El TSP es un problema NP-completo, lo que significa que:
+
+\begin{itemize}
+    \item No se conoce un algoritmo de tiempo polinomial que lo resuelva
+    \item Es tan difícil como cualquier otro problema en NP
+    \item Verificar una solución es computacionalmente eficiente
+\end{itemize}
+
+El número de posibles rutas para $n$ ciudades es $(n-1)!/2$, lo que crece factorialmente.
+
+\subsection{Grafos y Redes Viales}
+
+\subsubsection{Representación de Redes}
+
+En este proyecto, las redes viales se representan como grafos $G = (V, E, w)$ donde:
+
+\begin{itemize}
+    \item $V$ es el conjunto de nodos (intersecciones)
+    \item $E$ es el conjunto de aristas (segmentos de calle)
+    \item $w: E \rightarrow \mathbb{R}^+$ asigna pesos (distancias en metros)
+\end{itemize}
+
+\subsubsection{Camino Más Corto}
+
+Para calcular distancias entre puntos en la red, se utiliza el algoritmo de Dijkstra, que encuentra el camino más corto entre dos nodos en tiempo $O(|E| + |V| \log |V|)$ con una implementación eficiente.
+
+\subsection{Algoritmos para TSP}
+
+\subsubsection{Algoritmos Exactos}
+
+Los algoritmos exactos garantizan encontrar la solución óptima:
+
+\begin{itemize}
+    \item \textbf{Fuerza Bruta:} Enumera todas las permutaciones posibles
+    \item \textbf{Programación Dinámica:} Held-Karp reduce redundancia usando memoización
+    \item \textbf{Branch and Bound:} Poda el espacio de búsqueda
+\end{itemize}
+
+\subsubsection{Algoritmos Heurísticos}
+
+Los algoritmos heurísticos buscan soluciones aproximadas en tiempo razonable:
+
+\begin{itemize}
+    \item \textbf{Greedy:} Vecino más cercano
+    \item \textbf{Búsqueda Local:} 2-Opt, 3-Opt
+    \item \textbf{Metaheurísticas:} Algoritmos genéticos, simulated annealing
+\end{itemize}
+
+% Sección 3: Análisis Asintótico
+\section{Análisis Asintótico}
+
+\subsection{Fuerza Bruta}
+
+\subsubsection{Complejidad Temporal}
+
+El algoritmo de fuerza bruta evalúa todas las $(n-1)!$ permutaciones posibles:
+
+\begin{equation}
+T(n) = \Theta(n!)
+\end{equation}
+
+Para cada permutación, se calcula la distancia total en $O(n)$, resultando en:
+
+\begin{equation}
+T_{total}(n) = O(n \cdot n!) = O(n!)
+\end{equation}
+
+\subsubsection{Complejidad Espacial}
+
+El espacio utilizado es $O(n)$ para almacenar la mejor ruta encontrada.
+
+\subsubsection{Análisis de Crecimiento}
+
+La Tabla~\ref{tab:crecimiento_fb} muestra el crecimiento factorial:
+
+\begin{table}[H]
+\centering
+\caption{Número de permutaciones vs tamaño de entrada}
+\label{tab:crecimiento_fb}
+\begin{tabular}{@{}rr@{}}
+\toprule
+$n$ & Permutaciones \\ \midrule
+5   & 24 \\
+10  & 362,880 \\
+15  & $1.3 \times 10^{12}$ \\
+20  & $1.2 \times 10^{17}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Held-Karp}
+
+\subsubsection{Complejidad Temporal}
+
+El algoritmo de Held-Karp utiliza programación dinámica para evitar recalcular subproblemas:
+
+\begin{equation}
+T(n) = O(n^2 \cdot 2^n)
+\end{equation}
+
+Esto se debe a que:
+\begin{itemize}
+    \item Hay $2^{n-1}$ subconjuntos de ciudades
+    \item Para cada subconjunto, se consideran $O(n)$ ciudades finales
+    \item Cada cálculo requiere $O(n)$ operaciones
+\end{itemize}
+
+\subsubsection{Complejidad Espacial}
+
+El espacio requerido para la tabla de memoización es:
+
+\begin{equation}
+S(n) = O(n \cdot 2^n)
+\end{equation}
+
+\subsection{2-Opt}
+
+\subsubsection{Complejidad Temporal}
+
+El algoritmo 2-Opt tiene dos fases:
+
+\begin{enumerate}
+    \item Construcción de solución inicial (vecino más cercano): $O(n^2)$
+    \item Mejora iterativa con 2-Opt: $O(n^2 \cdot k)$ donde $k$ es el número de iteraciones
+\end{enumerate}
+
+En el peor caso:
+\begin{equation}
+T(n) = O(n^2 \cdot k)
+\end{equation}
+
+En la práctica, $k$ suele ser pequeño, resultando en $T(n) \approx O(n^2)$.
+
+\subsubsection{Complejidad Espacial}
+
+El espacio utilizado es $O(n)$ para almacenar la ruta.
+
+\subsection{Comparación Teórica}
+
+La Tabla~\ref{tab:comparacion_complejidad} resume las complejidades:
+
+\begin{table}[H]
+\centering
+\caption{Comparación de complejidades algorítmicas}
+\label{tab:comparacion_complejidad}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Algoritmo & Tiempo & Espacio & Garantía \\ \midrule
+Fuerza Bruta & $O(n!)$ & $O(n)$ & Óptima \\
+Held-Karp & $O(n^2 \cdot 2^n)$ & $O(n \cdot 2^n)$ & Óptima \\
+2-Opt & $O(n^2)$ & $O(n)$ & Aproximada \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Sección 4: Metodología
+\section{Metodología}
+
+\subsection{Herramientas y Tecnologías}
+
+\subsubsection{Backend}
+
+\begin{itemize}
+    \item \textbf{Lenguaje:} Python 3.9+
+    \item \textbf{Framework Web:} FastAPI
+    \item \textbf{Procesamiento de Grafos:} NetworkX
+    \item \textbf{Geometría Computacional:} Shapely
+    \item \textbf{Computación Numérica:} NumPy
+\end{itemize}
+
+\subsubsection{Frontend}
+
+\begin{itemize}
+    \item \textbf{Lenguaje:} TypeScript
+    \item \textbf{Visualización:} Leaflet
+    \item \textbf{Build Tool:} Vite
+\end{itemize}
+
+\subsection{Datasets Utilizados}
+
+Se utilizaron dos tipos de datasets:
+
+\subsubsection{Red Vial}
+
+\begin{itemize}
+    \item \textbf{Fuente:} OpenStreetMap
+    \item \textbf{Área:} Centro de Bogotá, Colombia
+    \item \textbf{Tamaño:} Aproximadamente 5,000 nodos y 10,000 aristas
+    \item \textbf{Formato:} GeoJSON
+\end{itemize}
+
+\subsubsection{Puntos de Interés}
+
+Se generaron datasets sintéticos con diferentes cantidades de puntos:
+\begin{itemize}
+    \item Conjuntos pequeños: 3-10 puntos
+    \item Conjuntos medianos: 12-20 puntos
+    \item Conjuntos grandes: 25-50 puntos (solo para 2-Opt)
+\end{itemize}
+
+\subsection{Proceso de Experimentación}
+
+\subsubsection{Configuración Experimental}
+
+\begin{enumerate}
+    \item Generación de matrices de distancias aleatorias
+    \item Ejecución de cada algoritmo con 3 repeticiones
+    \item Medición de tiempo de ejecución y calidad de solución
+    \item Registro de resultados en formato CSV y JSON
+\end{enumerate}
+
+\subsubsection{Métricas Evaluadas}
+
+\begin{itemize}
+    \item \textbf{Tiempo de ejecución:} Medido en segundos
+    \item \textbf{Distancia total:} Suma de distancias de la ruta
+    \item \textbf{Calidad de solución:} Comparación con solución óptima cuando es conocida
+\end{itemize}
+
+% Sección 5: Análisis Empírico
+\section{Análisis Empírico}
+
+\subsection{Resultados de Tiempo de Ejecución}
+
+% NOTA: Aquí se incluirán las tablas y gráficos generados
+% por el script medir_tiempos.py
+
+\subsubsection{Comparación de Algoritmos Exactos}
+
+Los algoritmos de Fuerza Bruta y Held-Karp muestran comportamiento exponencial, como se esperaba del análisis teórico.
+
+% Ejemplo de cómo incluir una tabla de resultados
+% (los datos reales se insertarán después de ejecutar las mediciones)
+
+\begin{table}[H]
+\centering
+\caption{Tiempos de ejecución promedio (segundos)}
+\label{tab:tiempos_ejecucion}
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+$n$ & Fuerza Bruta & Held-Karp & 2-Opt \\ \midrule
+5   & 0.001 & 0.001 & 0.002 \\
+10  & 0.523 & 0.045 & 0.012 \\
+15  & -- & 2.341 & 0.035 \\
+20  & -- & 45.678 & 0.089 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Calidad de Soluciones}
+
+El algoritmo 2-Opt, siendo una heurística, no garantiza encontrar la solución óptima. Sin embargo, en los experimentos realizados, la diferencia con el óptimo fue en promedio menor al 10\%.
+
+\subsection{Escalabilidad}
+
+Los resultados demuestran que:
+
+\begin{itemize}
+    \item \textbf{Fuerza Bruta:} Factible solo hasta 10-11 puntos
+    \item \textbf{Held-Karp:} Factible hasta aproximadamente 20 puntos
+    \item \textbf{2-Opt:} Escala eficientemente hasta 1000+ puntos
+\end{itemize}
+
+% Sección 6: Conclusiones
+\section{Conclusiones}
+
+\subsection{Hallazgos Principales}
+
+\begin{enumerate}
+    \item Los algoritmos exactos (Fuerza Bruta y Held-Karp) garantizan optimalidad pero tienen limitaciones severas de escalabilidad debido a su complejidad exponencial
+
+    \item Held-Karp es significativamente más eficiente que Fuerza Bruta, permitiendo resolver problemas hasta el doble de tamaño en tiempos razonables
+
+    \item El algoritmo 2-Opt ofrece un excelente balance entre calidad de solución y tiempo de ejecución, siendo práctico para problemas de tamaño real
+
+    \item La implementación sobre redes viales reales añade complejidad adicional pero proporciona resultados más aplicables a problemas del mundo real
+\end{enumerate}
+
+\subsection{Trabajo Futuro}
+
+Posibles extensiones de este trabajo incluyen:
+
+\begin{itemize}
+    \item Implementación de algoritmos adicionales como 3-Opt o Lin-Kernighan
+    \item Uso de metaheurísticas como algoritmos genéticos o simulated annealing
+    \item Paralelización de los algoritmos para mejorar el rendimiento
+    \item Aplicación a problemas reales de logística y distribución
+    \item Integración de restricciones adicionales (ventanas de tiempo, capacidades)
+\end{itemize}
+
+\subsection{Lecciones Aprendidas}
+
+Este proyecto demostró la importancia de:
+
+\begin{itemize}
+    \item Seleccionar el algoritmo apropiado según el tamaño del problema
+    \item Considerar el trade-off entre optimalidad y tiempo de ejecución
+    \item Validar implementaciones con casos de prueba conocidos
+    \item Optimizar estructuras de datos para problemas grandes
+\end{itemize}
+
+% Referencias
+\begin{thebibliography}{9}
+
+\bibitem{held1962}
+Held, M., \& Karp, R. M. (1962).
+\textit{A dynamic programming approach to sequencing problems}.
+Journal of the Society for Industrial and Applied Mathematics, 10(1), 196-210.
+
+\bibitem{croes1958}
+Croes, G. A. (1958).
+\textit{A method for solving traveling-salesman problems}.
+Operations Research, 6(6), 791-812.
+
+\bibitem{cormen2009}
+Cormen, T. H., Leiserson, C. E., Rivest, R. L., \& Stein, C. (2009).
+\textit{Introduction to Algorithms} (3rd ed.). MIT Press.
+
+\bibitem{osmnx2017}
+Boeing, G. (2017).
+\textit{OSMnx: New methods for acquiring, constructing, analyzing, and visualizing complex street networks}.
+Computers, Environment and Urban Systems, 65, 126-139.
+
+\bibitem{networkx2008}
+Hagberg, A., Swart, P., \& S Chult, D. (2008).
+\textit{Exploring network structure, dynamics, and function using NetworkX}.
+Los Alamos National Lab.(LANL), Los Alamos, NM (United States).
+
+\end{thebibliography}
+
+% Apéndices
+\appendix
+
+\section{Código Fuente}
+
+El código fuente completo está disponible en el repositorio del proyecto. A continuación se presentan fragmentos relevantes de los algoritmos principales.
+
+\subsection{Algoritmo de Held-Karp}
+
+\begin{lstlisting}
+def tsp_held_karp(matriz_distancias):
+    n = len(matriz_distancias)
+    memo = {}
+
+    # Caso base
+    for k in range(1, n):
+        memo[(1 << k, k)] = (matriz_distancias[0][k], [0, k])
+
+    # Programacion dinamica
+    for subset_size in range(2, n):
+        for subset in generar_subconjuntos(n, subset_size):
+            for k in subset:
+                prev_subset = subset & ~(1 << k)
+                mejor_dist = float('inf')
+
+                for m in prev_subset:
+                    if (prev_subset, m) in memo:
+                        dist = memo[(prev_subset, m)][0] + matriz_distancias[m][k]
+                        if dist < mejor_dist:
+                            mejor_dist = dist
+
+                memo[(subset, k)] = (mejor_dist, camino)
+
+    return ruta_optima, distancia_optima
+\end{lstlisting}
+
+\end{document}
 

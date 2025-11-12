@@ -1,2 +1,145 @@
-<!-- Contenedor de la app -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Optimización de Rutas TSP</title>
+  <link rel="stylesheet" href="./src/estilos.css">
+</head>
+<body>
+  <!-- Encabezado principal -->
+  <header class="encabezado">
+    <h1>Sistema de Optimización de Rutas TSP</h1>
+    <div class="estado-sistema">
+      <span>Estado del servidor:</span>
+      <span id="estado-conexion" class="indicador">Verificando...</span>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <div class="contenedor-principal">
+    <!-- Panel de control lateral -->
+    <aside class="panel-control">
+      <!-- Sección de carga de red -->
+      <section class="seccion-control">
+        <h2>1. Cargar Red Vial</h2>
+        <p class="descripcion">Seleccione un archivo GeoJSON con la red de calles</p>
+        <div class="grupo-archivo">
+          <input type="file" id="archivo-red" accept=".geojson" class="input-archivo">
+          <button id="btn-cargar-red" class="boton boton-primario">
+            Cargar Red
+          </button>
+        </div>
+      </section>
+
+      <!-- Sección de carga de puntos -->
+      <section class="seccion-control">
+        <h2>2. Cargar Puntos de Interés</h2>
+        <p class="descripcion">Seleccione un archivo CSV con los puntos a visitar</p>
+        <div class="grupo-archivo">
+          <input type="file" id="archivo-puntos" accept=".csv" class="input-archivo">
+          <button id="btn-cargar-puntos" class="boton boton-primario" disabled>
+            Cargar Puntos
+          </button>
+        </div>
+        <p class="nota">Nota: Primero debe cargar la red vial</p>
+      </section>
+
+      <!-- Sección de selección de algoritmos -->
+      <section class="seccion-control">
+        <h2>3. Seleccionar Algoritmos</h2>
+        <p class="descripcion">Elija los algoritmos a ejecutar</p>
+        <div class="grupo-checkboxes">
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox-algoritmo" value="fuerza_bruta" checked>
+            <span>Fuerza Bruta</span>
+            <span class="info-algoritmo">(hasta 11 puntos)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox-algoritmo" value="held_karp" checked>
+            <span>Held-Karp</span>
+            <span class="info-algoritmo">(hasta 20 puntos)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox-algoritmo" value="2opt" checked>
+            <span>2-Opt</span>
+            <span class="info-algoritmo">(cualquier tamaño)</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Sección de evaluación -->
+      <section class="seccion-control">
+        <h2>4. Evaluar</h2>
+        <button id="btn-evaluar" class="boton boton-grande boton-evaluar" disabled>
+          Ejecutar Algoritmos
+        </button>
+        <p class="nota">Nota: Primero debe cargar puntos</p>
+      </section>
+
+      <!-- Sección de exportación -->
+      <section class="seccion-control">
+        <h2>5. Exportar Resultados</h2>
+        <button id="btn-exportar" class="boton boton-secundario" disabled>
+          Descargar GeoJSON
+        </button>
+      </section>
+
+      <!-- Área de resultados -->
+      <section id="resultados" class="seccion-resultados" style="display: none;">
+        <!-- Los resultados se insertan dinámicamente -->
+      </section>
+    </aside>
+
+    <!-- Área del mapa -->
+    <main class="area-mapa">
+      <div id="mapa" class="mapa"></div>
+
+      <!-- Leyenda del mapa -->
+      <div class="leyenda">
+        <h3>Leyenda</h3>
+        <div class="item-leyenda">
+          <span class="color-muestra" style="background-color: #0066CC;"></span>
+          <span>Red Vial</span>
+        </div>
+        <div class="item-leyenda">
+          <span class="color-muestra" style="background-color: #FF6B6B;"></span>
+          <span>Puntos de Interés</span>
+        </div>
+        <div class="item-leyenda">
+          <span class="color-muestra" style="background-color: #FF0000;"></span>
+          <span>Ruta Fuerza Bruta</span>
+        </div>
+        <div class="item-leyenda">
+          <span class="color-muestra" style="background-color: #00FF00;"></span>
+          <span>Ruta Held-Karp</span>
+        </div>
+        <div class="item-leyenda">
+          <span class="color-muestra" style="background-color: #FFA500;"></span>
+          <span>Ruta 2-Opt</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Indicador de carga -->
+  <div id="spinner" class="spinner" style="display: none;">
+    <div class="spinner-contenido">
+      <div class="spinner-animacion"></div>
+      <p>Procesando...</p>
+    </div>
+  </div>
+
+  <!-- Contenedor de mensajes -->
+  <div id="mensajes" class="contenedor-mensajes"></div>
+
+  <!-- Pie de página -->
+  <footer class="pie-pagina">
+    <p>Sistema TSP - Proyecto de Análisis de Algoritmos - 2025</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="./src/principal.ts"></script>
+</body>
+</html>
 

@@ -1,5 +1,130 @@
 {
   "type": "FeatureCollection",
-  "features": []
+  "name": "Red Vial Centro Bogotá",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Carrera 7 (Norte-Sur)", "tipo": "via_principal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0740, 4.6400],
+          [-74.0740, 4.6450],
+          [-74.0740, 4.6500],
+          [-74.0740, 4.6550]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Carrera 10 (Norte-Sur)", "tipo": "via_principal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0810, 4.6400],
+          [-74.0810, 4.6450],
+          [-74.0810, 4.6500],
+          [-74.0810, 4.6550]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Carrera 13 (Norte-Sur)", "tipo": "via_principal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0880, 4.6400],
+          [-74.0880, 4.6450],
+          [-74.0880, 4.6500],
+          [-74.0880, 4.6550]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Calle 11 (Este-Oeste)", "tipo": "via_secundaria"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0880, 4.6430],
+          [-74.0810, 4.6430],
+          [-74.0740, 4.6430]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Calle 13 (Este-Oeste)", "tipo": "via_principal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0880, 4.6470],
+          [-74.0810, 4.6470],
+          [-74.0740, 4.6470]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Calle 19 (Este-Oeste)", "tipo": "via_secundaria"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0880, 4.6510],
+          [-74.0810, 4.6510],
+          [-74.0740, 4.6510]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Calle 26 (Este-Oeste)", "tipo": "via_principal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0880, 4.6550],
+          [-74.0810, 4.6550],
+          [-74.0740, 4.6550]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Diagonal Plaza Bolívar", "tipo": "via_local"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0810, 4.6480],
+          [-74.0770, 4.6490]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Conexión Candelaria", "tipo": "via_local"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0750, 4.6495],
+          [-74.0730, 4.6505]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"nombre": "Avenida Jiménez", "tipo": "via_principal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0900, 4.6450],
+          [-74.0850, 4.6455],
+          [-74.0800, 4.6460],
+          [-74.0750, 4.6465],
+          [-74.0720, 4.6468]
+        ]
+      }
+    }
+  ]
 }
 

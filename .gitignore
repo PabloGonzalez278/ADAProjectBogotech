@@ -4,102 +4,49 @@ __pycache__/
 *$py.class
 *.so
 .Python
-env/
 venv/
+.venv/
+env/
 ENV/
 *.egg-info/
 dist/
 build/
-*.egg
-
-# Node
-node_modules/
-dist/
-.cache/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# IDEs - JetBrains (PyCharm, IntelliJ, etc)
-.idea/
-*.iml
-*.iws
-*.ipr
-out/
-.idea_modules/
-
-# IDEs - Visual Studio Code
-.vscode/
-*.code-workspace
-
-# IDEs - Visual Studio
-.vs/
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# IDEs - Otros
-*.swp
-*.swo
-*~
-
-# GitHub Copilot
-.copilot/
-*.copilot*
-copilot*.json
-copilot*.xml
-.github/copilot/
-.idea/copilot*.xml
-
-# OS - macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# OS - Windows
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-desktop.ini
-$RECYCLE.BIN/
-
-# OS - Linux
-*~
-
-# LaTeX
-*.aux
-*.log
-*.out
-*.toc
-*.pdf
-*.synctex.gz
-*.bbl
-*.blg
-*.fls
-*.fdb_latexmk
-*.nav
-*.snm
-*.vrb
-
-# Datos temporales
-*.tmp
-*.bak
-*.swp
-*.orig
-
-# Jupyter Notebooks
-.ipynb_checkpoints/
-*.ipynb_checkpoints
-
-# Pytest
 .pytest_cache/
 .coverage
 htmlcov/
 
-# MyPy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+*.pyc
+*.pyo
+*.log
+
+# Datos temporales
+*.tmp
+*.cache
+cache/
+
+# Entornos virtuales
+backend/venv/
+frontend/node_modules/
+
+# Archivos de configuración local
+.env.local
+.env.*.local
 
