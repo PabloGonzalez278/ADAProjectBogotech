@@ -1,0 +1,1085 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Universidad Javeriana",
+        "hacia": "Museo Nacional de Colombia",
+        "segmento": 1,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "ruta_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0645,
+            4.6286
+          ],
+          [
+            -74.071,
+            4.632
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Museo Nacional de Colombia",
+        "hacia": "Parque Nacional Olaya Herrera",
+        "segmento": 2,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "ruta_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.071,
+            4.632
+          ],
+          [
+            -74.0629,
+            4.635
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Parque Nacional Olaya Herrera",
+        "hacia": "Planetario de Bogota",
+        "segmento": 3,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "ruta_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0629,
+            4.635
+          ],
+          [
+            -74.068,
+            4.625
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Planetario de Bogota",
+        "hacia": "Plaza de Bolivar",
+        "segmento": 4,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "ruta_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.068,
+            4.625
+          ],
+          [
+            -74.0836,
+            4.6534
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Plaza de Bolivar",
+        "hacia": "Barrio La Candelaria",
+        "segmento": 5,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "ruta_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0836,
+            4.6534
+          ],
+          [
+            -74.0653,
+            4.6181
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Barrio La Candelaria",
+        "hacia": "Monserrate",
+        "segmento": 6,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "ruta_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0653,
+            4.6181
+          ],
+          [
+            -74.0817,
+            4.6097
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Monserrate",
+        "hacia": "Centro Comercial Andino",
+        "segmento": 7,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "ruta_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0817,
+            4.6097
+          ],
+          [
+            -74.0557,
+            4.6397
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Centro Comercial Andino",
+        "hacia": "Universidad Javeriana",
+        "segmento": 8,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "ruta_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0557,
+            4.6397
+          ],
+          [
+            -74.0645,
+            4.6286
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Universidad Javeriana",
+        "orden_visita": 1,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "punto_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0645,
+          4.6286
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Museo Nacional de Colombia",
+        "orden_visita": 2,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "punto_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.071,
+          4.632
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Parque Nacional Olaya Herrera",
+        "orden_visita": 3,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "punto_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0629,
+          4.635
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Planetario de Bogota",
+        "orden_visita": 4,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "punto_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.068,
+          4.625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Plaza de Bolivar",
+        "orden_visita": 5,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "punto_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0836,
+          4.6534
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Barrio La Candelaria",
+        "orden_visita": 6,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "punto_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0653,
+          4.6181
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Monserrate",
+        "orden_visita": 7,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "punto_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0817,
+          4.6097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Centro Comercial Andino",
+        "orden_visita": 8,
+        "algoritmo": "fuerza_bruta",
+        "tipo": "punto_tsp",
+        "color": "#FF0000",
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0557,
+          4.6397
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Universidad Javeriana",
+        "hacia": "Museo Nacional de Colombia",
+        "segmento": 1,
+        "algoritmo": "held_karp",
+        "tipo": "ruta_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0645,
+            4.6286
+          ],
+          [
+            -74.071,
+            4.632
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Museo Nacional de Colombia",
+        "hacia": "Parque Nacional Olaya Herrera",
+        "segmento": 2,
+        "algoritmo": "held_karp",
+        "tipo": "ruta_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.071,
+            4.632
+          ],
+          [
+            -74.0629,
+            4.635
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Parque Nacional Olaya Herrera",
+        "hacia": "Planetario de Bogota",
+        "segmento": 3,
+        "algoritmo": "held_karp",
+        "tipo": "ruta_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0629,
+            4.635
+          ],
+          [
+            -74.068,
+            4.625
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Planetario de Bogota",
+        "hacia": "Plaza de Bolivar",
+        "segmento": 4,
+        "algoritmo": "held_karp",
+        "tipo": "ruta_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.068,
+            4.625
+          ],
+          [
+            -74.0836,
+            4.6534
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Plaza de Bolivar",
+        "hacia": "Barrio La Candelaria",
+        "segmento": 5,
+        "algoritmo": "held_karp",
+        "tipo": "ruta_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0836,
+            4.6534
+          ],
+          [
+            -74.0653,
+            4.6181
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Barrio La Candelaria",
+        "hacia": "Monserrate",
+        "segmento": 6,
+        "algoritmo": "held_karp",
+        "tipo": "ruta_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0653,
+            4.6181
+          ],
+          [
+            -74.0817,
+            4.6097
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Monserrate",
+        "hacia": "Centro Comercial Andino",
+        "segmento": 7,
+        "algoritmo": "held_karp",
+        "tipo": "ruta_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0817,
+            4.6097
+          ],
+          [
+            -74.0557,
+            4.6397
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Centro Comercial Andino",
+        "hacia": "Universidad Javeriana",
+        "segmento": 8,
+        "algoritmo": "held_karp",
+        "tipo": "ruta_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0557,
+            4.6397
+          ],
+          [
+            -74.0645,
+            4.6286
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Universidad Javeriana",
+        "orden_visita": 1,
+        "algoritmo": "held_karp",
+        "tipo": "punto_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0645,
+          4.6286
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Museo Nacional de Colombia",
+        "orden_visita": 2,
+        "algoritmo": "held_karp",
+        "tipo": "punto_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.071,
+          4.632
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Parque Nacional Olaya Herrera",
+        "orden_visita": 3,
+        "algoritmo": "held_karp",
+        "tipo": "punto_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0629,
+          4.635
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Planetario de Bogota",
+        "orden_visita": 4,
+        "algoritmo": "held_karp",
+        "tipo": "punto_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.068,
+          4.625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Plaza de Bolivar",
+        "orden_visita": 5,
+        "algoritmo": "held_karp",
+        "tipo": "punto_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0836,
+          4.6534
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Barrio La Candelaria",
+        "orden_visita": 6,
+        "algoritmo": "held_karp",
+        "tipo": "punto_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0653,
+          4.6181
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Monserrate",
+        "orden_visita": 7,
+        "algoritmo": "held_karp",
+        "tipo": "punto_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0817,
+          4.6097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Centro Comercial Andino",
+        "orden_visita": 8,
+        "algoritmo": "held_karp",
+        "tipo": "punto_tsp",
+        "color": "#00FF00",
+        "stroke": "#00FF00",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0557,
+          4.6397
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Universidad Javeriana",
+        "hacia": "Museo Nacional de Colombia",
+        "segmento": 1,
+        "algoritmo": "2opt",
+        "tipo": "ruta_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0645,
+            4.6286
+          ],
+          [
+            -74.071,
+            4.632
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Museo Nacional de Colombia",
+        "hacia": "Parque Nacional Olaya Herrera",
+        "segmento": 2,
+        "algoritmo": "2opt",
+        "tipo": "ruta_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.071,
+            4.632
+          ],
+          [
+            -74.0629,
+            4.635
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Parque Nacional Olaya Herrera",
+        "hacia": "Planetario de Bogota",
+        "segmento": 3,
+        "algoritmo": "2opt",
+        "tipo": "ruta_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0629,
+            4.635
+          ],
+          [
+            -74.068,
+            4.625
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Planetario de Bogota",
+        "hacia": "Plaza de Bolivar",
+        "segmento": 4,
+        "algoritmo": "2opt",
+        "tipo": "ruta_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.068,
+            4.625
+          ],
+          [
+            -74.0836,
+            4.6534
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Plaza de Bolivar",
+        "hacia": "Barrio La Candelaria",
+        "segmento": 5,
+        "algoritmo": "2opt",
+        "tipo": "ruta_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0836,
+            4.6534
+          ],
+          [
+            -74.0653,
+            4.6181
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Barrio La Candelaria",
+        "hacia": "Monserrate",
+        "segmento": 6,
+        "algoritmo": "2opt",
+        "tipo": "ruta_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0653,
+            4.6181
+          ],
+          [
+            -74.0817,
+            4.6097
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Monserrate",
+        "hacia": "Centro Comercial Andino",
+        "segmento": 7,
+        "algoritmo": "2opt",
+        "tipo": "ruta_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0817,
+            4.6097
+          ],
+          [
+            -74.0557,
+            4.6397
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "desde": "Centro Comercial Andino",
+        "hacia": "Universidad Javeriana",
+        "segmento": 8,
+        "algoritmo": "2opt",
+        "tipo": "ruta_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -74.0557,
+            4.6397
+          ],
+          [
+            -74.0645,
+            4.6286
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Universidad Javeriana",
+        "orden_visita": 1,
+        "algoritmo": "2opt",
+        "tipo": "punto_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0645,
+          4.6286
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Museo Nacional de Colombia",
+        "orden_visita": 2,
+        "algoritmo": "2opt",
+        "tipo": "punto_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.071,
+          4.632
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Parque Nacional Olaya Herrera",
+        "orden_visita": 3,
+        "algoritmo": "2opt",
+        "tipo": "punto_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0629,
+          4.635
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Planetario de Bogota",
+        "orden_visita": 4,
+        "algoritmo": "2opt",
+        "tipo": "punto_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.068,
+          4.625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Plaza de Bolivar",
+        "orden_visita": 5,
+        "algoritmo": "2opt",
+        "tipo": "punto_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0836,
+          4.6534
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Barrio La Candelaria",
+        "orden_visita": 6,
+        "algoritmo": "2opt",
+        "tipo": "punto_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0653,
+          4.6181
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Monserrate",
+        "orden_visita": 7,
+        "algoritmo": "2opt",
+        "tipo": "punto_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0817,
+          4.6097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Centro Comercial Andino",
+        "orden_visita": 8,
+        "algoritmo": "2opt",
+        "tipo": "punto_tsp",
+        "color": "#FFA500",
+        "stroke": "#FFA500",
+        "stroke-width": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0557,
+          4.6397
+        ]
+      }
+    }
+  ]
+}
