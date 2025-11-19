@@ -13,31 +13,22 @@ import {
   verificarConexion,
   obtenerEstado
 } from './api_cliente';
-import { Punto, SolicitudEvaluacion, NOMBRES_ALGORITMOS } from './tipos';
+import { Punto, SolicitudEvaluacion, NOMBRES_ALGORITMOS, ComparacionAlgoritmos } from './tipos';
 
 /**
  * Clase principal que gestiona la aplicación.
- * Maneja el flujo de datos entre interfaz, API y mapa.
  */
 class Aplicacion {
   private gestor_mapa: GestorMapa;
   private puntos_cargados: Punto[] = [];
   private estado_conectado: boolean = false;
 
-  /**
-   * Inicializa la aplicación y sus componentes.
-   * Configura eventos y verifica conexión con el backend.
-   */
   constructor() {
     this.gestor_mapa = new GestorMapa('mapa');
     this.configurarEventos();
     this.verificarBackend();
   }
 
-  /**
-   * Configura los event listeners de la interfaz.
-   * Asocia elementos HTML con sus manejadores de eventos.
-   */
   private configurarEventos(): void {
     const botonRed = document.getElementById('btn-cargar-red');
     const botonPuntos = document.getElementById('btn-cargar-puntos');
@@ -47,38 +38,22 @@ class Aplicacion {
     if (botonRed) {
       botonRed.addEventListener('click', () => this.manejarCargarRed());
     }
-
     if (botonPuntos) {
       botonPuntos.addEventListener('click', () => this.manejarCargarPuntos());
     }
-
     if (botonEvaluar) {
       botonEvaluar.addEventListener('click', () => this.manejarEvaluar());
     }
-
     if (botonExportar) {
       botonExportar.addEventListener('click', () => this.manejarExportar());
     }
   }
 
-  /**
-   * Verifica la conexión con el backend.
-   * Muestra el estado de conexión en la interfaz.
-   */
   private async verificarBackend(): Promise<void> {
-    try {
-      this.estado_conectado = await verificarConexion();
-      this.actualizarEstadoConexion(this.estado_conectado);
-    } catch {
-      this.estado_conectado = false;
-      this.actualizarEstadoConexion(false);
-    }
+    this.estado_conectado = await verificarConexion();
+    this.actualizarEstadoConexion(this.estado_conectado);
   }
 
-  /**
-   * Actualiza el indicador visual de conexión.
-   * Cambia color y texto según el estado.
-   */
   private actualizarEstadoConexion(conectado: boolean): void {
     const indicador = document.getElementById('estado-conexion');
     if (indicador) {
@@ -87,147 +62,95 @@ class Aplicacion {
     }
   }
 
-  /**
-   * Maneja la carga de archivo de red vial.
-   * Lee el archivo, lo envía al backend y muestra el resultado.
-   */
   private async manejarCargarRed(): Promise<void> {
     const input = document.getElementById('archivo-red') as HTMLInputElement;
-
     if (!input || !input.files || input.files.length === 0) {
-      this.mostrarMensaje('Seleccione un archivo GeoJSON', 'error');
-      return;
+        this.mostrarMensaje('Seleccione un archivo GeoJSON para la red', 'error');
+        return;
     }
-
     const archivo = input.files[0];
-
-    if (!archivo.name.endsWith('.geojson')) {
-      this.mostrarMensaje('El archivo debe ser GeoJSON', 'error');
-      return;
-    }
-
+    this.mostrarCargando(true);
     try {
-      this.mostrarCargando(true);
-
-      const resultado = await cargarRed(archivo);
-
-      const contenido = await archivo.text();
-      const geojson = JSON.parse(contenido);
-
-      this.gestor_mapa.dibujarRed(geojson);
-
-      this.mostrarMensaje(
-        `Red cargada: ${resultado.num_nodos} nodos, ${resultado.num_aristas} aristas`,
-        'exito'
-      );
-
-      this.actualizarEstadoInterfaz();
-
+        const resultado = await cargarRed(archivo);
+        const geojson = JSON.parse(await archivo.text());
+        this.gestor_mapa.dibujarRed(geojson);
+        this.mostrarMensaje(`Red cargada: ${resultado.num_nodos} nodos, ${resultado.num_aristas} aristas`, 'exito');
+        this.actualizarEstadoInterfaz();
     } catch (error) {
-      this.mostrarMensaje(`Error cargando red: ${error}`, 'error');
+        this.mostrarMensaje(`Error cargando red: ${error}`, 'error');
     } finally {
-      this.mostrarCargando(false);
+        this.mostrarCargando(false);
     }
   }
 
-  /**
-   * Maneja la carga de archivo de puntos de interés.
-   * Procesa el CSV, envía al backend e integra en la red.
-   */
   private async manejarCargarPuntos(): Promise<void> {
     const input = document.getElementById('archivo-puntos') as HTMLInputElement;
-
     if (!input || !input.files || input.files.length === 0) {
-      this.mostrarMensaje('Seleccione un archivo CSV', 'error');
-      return;
+        this.mostrarMensaje('Seleccione un archivo CSV con los puntos', 'error');
+        return;
     }
-
     const archivo = input.files[0];
-
-    if (!archivo.name.endsWith('.csv')) {
-      this.mostrarMensaje('El archivo debe ser CSV', 'error');
-      return;
-    }
-
+    this.mostrarCargando(true);
     try {
-      this.mostrarCargando(true);
-
-      const resultado = await cargarPuntos(archivo);
-
-      this.puntos_cargados = resultado.puntos;
-
-      this.gestor_mapa.dibujarPuntos(this.puntos_cargados);
-
-      this.mostrarMensaje(
-        `${resultado.num_puntos} puntos integrados exitosamente`,
-        'exito'
-      );
-
-      this.actualizarEstadoInterfaz();
-
+        const resultado = await cargarPuntos(archivo);
+        this.puntos_cargados = resultado.puntos;
+        this.gestor_mapa.dibujarPuntos(this.puntos_cargados);
+        this.mostrarMensaje(`${resultado.num_puntos} puntos integrados`, 'exito');
+        this.actualizarEstadoInterfaz();
     } catch (error) {
-      this.mostrarMensaje(`Error cargando puntos: ${error}`, 'error');
+        this.mostrarMensaje(`Error cargando puntos: ${error}`, 'error');
     } finally {
-      this.mostrarCargando(false);
+        this.mostrarCargando(false);
     }
   }
 
-  /**
-   * Maneja la evaluación de algoritmos TSP.
-   * Obtiene algoritmos seleccionados, ejecuta y muestra resultados.
-   */
   private async manejarEvaluar(): Promise<void> {
     const algoritmos = this.obtenerAlgoritmosSeleccionados();
-
     if (algoritmos.length === 0) {
       this.mostrarMensaje('Seleccione al menos un algoritmo', 'error');
       return;
     }
 
+    this.mostrarCargando(true);
     try {
-      this.mostrarCargando(true);
-
-      const solicitud: SolicitudEvaluacion = {
-        algoritmos: algoritmos,
-        limite_tiempo: 60.0
-      };
-
+      const solicitud: SolicitudEvaluacion = { algoritmos, limite_tiempo: 60.0 };
       const resultado = await evaluarAlgoritmos(solicitud);
-
+      
       this.gestor_mapa.limpiarRutas();
-
+      
       const comparacion = resultado.comparacion;
+      const promesasDeRutas = [];
 
       if (comparacion.fuerza_bruta) {
-        this.gestor_mapa.dibujarRuta(
+        promesasDeRutas.push(this.gestor_mapa.dibujarRutaDetallada(
           comparacion.fuerza_bruta.ruta,
           this.puntos_cargados,
           'fuerza_bruta',
           comparacion.fuerza_bruta.distancia_total
-        );
+        ));
       }
-
       if (comparacion.held_karp) {
-        this.gestor_mapa.dibujarRuta(
+        promesasDeRutas.push(this.gestor_mapa.dibujarRutaDetallada(
           comparacion.held_karp.ruta,
           this.puntos_cargados,
           'held_karp',
           comparacion.held_karp.distancia_total
-        );
+        ));
       }
-
       if (comparacion.vecino_2opt) {
-        this.gestor_mapa.dibujarRuta(
+        promesasDeRutas.push(this.gestor_mapa.dibujarRutaDetallada(
           comparacion.vecino_2opt.ruta,
           this.puntos_cargados,
           '2opt',
           comparacion.vecino_2opt.distancia_total
-        );
+        ));
       }
 
-      this.mostrarResultados(comparacion);
+      await Promise.all(promesasDeRutas);
 
-      this.mostrarMensaje('Algoritmos ejecutados exitosamente', 'exito');
+      this.mostrarResultados(comparacion);
+      this.mostrarMensaje('Algoritmos ejecutados y rutas dibujadas', 'exito');
+      this.actualizarEstadoInterfaz();
 
     } catch (error) {
       this.mostrarMensaje(`Error evaluando algoritmos: ${error}`, 'error');
@@ -236,23 +159,12 @@ class Aplicacion {
     }
   }
 
-  /**
-   * Maneja la exportación de resultados.
-   * Descarga los resultados en formato GeoJSON.
-   */
   private async manejarExportar(): Promise<void> {
+    this.mostrarCargando(true);
     try {
-      this.mostrarCargando(true);
-
       const blob = await exportarResultados('geojson');
-
-      const fecha = new Date().toISOString().split('T')[0];
-      const nombreArchivo = `resultados_tsp_${fecha}.geojson`;
-
-      descargarArchivo(blob, nombreArchivo);
-
+      descargarArchivo(blob, `resultados_tsp_${new Date().toISOString()}.geojson`);
       this.mostrarMensaje('Resultados exportados exitosamente', 'exito');
-
     } catch (error) {
       this.mostrarMensaje(`Error exportando: ${error}`, 'error');
     } finally {
@@ -260,132 +172,91 @@ class Aplicacion {
     }
   }
 
-  /**
-   * Obtiene los algoritmos seleccionados en la interfaz.
-   * Lee los checkboxes marcados por el usuario.
-   */
   private obtenerAlgoritmosSeleccionados(): string[] {
-    const algoritmos: string[] = [];
-
-    const checkboxes = document.querySelectorAll('.checkbox-algoritmo:checked');
-    checkboxes.forEach((checkbox) => {
-      const valor = (checkbox as HTMLInputElement).value;
-      algoritmos.push(valor);
+    const seleccionados: string[] = [];
+    document.querySelectorAll('.checkbox-algoritmo:checked').forEach(el => {
+      seleccionados.push((el as HTMLInputElement).value);
     });
-
-    return algoritmos;
+    return seleccionados;
   }
 
-  /**
-   * Muestra los resultados en la interfaz.
-   * Crea una tabla comparativa de los algoritmos ejecutados.
-   */
-  private mostrarResultados(comparacion: any): void {
+  private mostrarResultados(comparacion: ComparacionAlgoritmos): void {
     const contenedor = document.getElementById('resultados');
     if (!contenedor) return;
 
-    let html = '<h3>Resultados</h3><table class="tabla-resultados">';
-    html += '<tr><th>Algoritmo</th><th>Distancia (m)</th><th>Tiempo (s)</th><th>Óptimo</th></tr>';
-
-    if (comparacion.fuerza_bruta) {
-      const r = comparacion.fuerza_bruta;
-      html += `<tr>
-        <td>${NOMBRES_ALGORITMOS['fuerza_bruta']}</td>
-        <td>${r.distancia_total.toFixed(2)}</td>
-        <td>${r.tiempo_ejecucion.toFixed(3)}</td>
-        <td>${r.es_optimo ? 'Sí' : 'No'}</td>
-      </tr>`;
+    const resultados = [comparacion.fuerza_bruta, comparacion.held_karp, comparacion.vecino_2opt].filter(r => r != null);
+    if (resultados.length === 0) {
+      contenedor.style.display = 'none';
+      return;
     }
 
-    if (comparacion.held_karp) {
-      const r = comparacion.held_karp;
-      html += `<tr>
-        <td>${NOMBRES_ALGORITMOS['held_karp']}</td>
-        <td>${r.distancia_total.toFixed(2)}</td>
-        <td>${r.tiempo_ejecucion.toFixed(3)}</td>
-        <td>${r.es_optimo ? 'Sí' : 'No'}</td>
-      </tr>`;
-    }
+    const mejorResultado = resultados.reduce((mejor, actual) => actual!.distancia_total < mejor!.distancia_total ? actual : mejor);
 
-    if (comparacion.vecino_2opt) {
-      const r = comparacion.vecino_2opt;
-      html += `<tr>
-        <td>${NOMBRES_ALGORITMOS['2opt']}</td>
-        <td>${r.distancia_total.toFixed(2)}</td>
-        <td>${r.tiempo_ejecucion.toFixed(3)}</td>
-        <td>${r.es_optimo ? 'Sí' : 'No'}</td>
-      </tr>`;
-    }
+    let html = `
+      <div class="resumen-resultados">
+        Mejor ruta encontrada: 
+        <strong>${(mejorResultado!.distancia_total / 1000).toFixed(2)} km</strong> 
+        con ${NOMBRES_ALGORITMOS[mejorResultado!.algoritmo]}
+      </div>
+      <table class="tabla-resultados">
+        <tr>
+          <th>Algoritmo</th>
+          <th>Distancia (km)</th>
+          <th>Tiempo (s)</th>
+          <th>Óptimo
+            <span class="tooltip">
+              &#9432;
+              <span class="tooltiptext">Indica si el algoritmo garantiza la mejor ruta posible.</span>
+            </span>
+          </th>
+        </tr>`;
+
+    resultados.forEach(r => {
+      if (!r) return;
+      const esMejor = r.algoritmo === mejorResultado!.algoritmo;
+      const optimoIcono = r.es_optimo 
+        ? `<span class="tooltip">&#9989;<span class="tooltiptext">Garantiza la solución óptima.</span></span>`
+        : `<span class="tooltip">&#10060;<span class="tooltiptext">Es una aproximación, no garantiza la ruta más corta.</span></span>`;
+
+      html += `
+        <tr class="${esMejor ? 'fila-mejor' : ''}">
+          <td>${NOMBRES_ALGORITMOS[r.algoritmo]}</td>
+          <td>${(r.distancia_total / 1000).toFixed(2)}</td>
+          <td>${r.tiempo_ejecucion.toFixed(4)}</td>
+          <td style="text-align: center;">${optimoIcono}</td>
+        </tr>`;
+    });
 
     html += '</table>';
     contenedor.innerHTML = html;
     contenedor.style.display = 'block';
   }
 
-  /**
-   * Muestra un mensaje al usuario.
-   * Puede ser de tipo exito, error o info.
-   */
   private mostrarMensaje(texto: string, tipo: 'exito' | 'error' | 'info'): void {
     const contenedor = document.getElementById('mensajes');
     if (!contenedor) return;
-
     const mensaje = document.createElement('div');
     mensaje.className = `mensaje mensaje-${tipo}`;
     mensaje.textContent = texto;
-
     contenedor.appendChild(mensaje);
-
-    setTimeout(() => {
-      mensaje.remove();
-    }, 5000);
+    setTimeout(() => mensaje.remove(), 5000);
   }
 
-  /**
-   * Muestra u oculta el indicador de carga.
-   * Proporciona feedback visual durante operaciones largas.
-   */
   private mostrarCargando(mostrar: boolean): void {
     const spinner = document.getElementById('spinner');
-    if (spinner) {
-      spinner.style.display = mostrar ? 'block' : 'none';
-    }
+    if (spinner) spinner.style.display = mostrar ? 'flex' : 'none';
   }
 
-  /**
-   * Actualiza el estado de la interfaz según datos del backend.
-   * Habilita/deshabilita botones según el estado del sistema.
-   */
   private async actualizarEstadoInterfaz(): Promise<void> {
     try {
       const estado = await obtenerEstado();
-
-      const btnPuntos = document.getElementById('btn-cargar-puntos') as HTMLButtonElement;
-      const btnEvaluar = document.getElementById('btn-evaluar') as HTMLButtonElement;
-      const btnExportar = document.getElementById('btn-exportar') as HTMLButtonElement;
-
-      if (btnPuntos) {
-        btnPuntos.disabled = !estado.red_cargada;
-      }
-
-      if (btnEvaluar) {
-        btnEvaluar.disabled = !estado.puntos_cargados;
-      }
-
-      if (btnExportar) {
-        btnExportar.disabled = estado.algoritmos_ejecutados.length === 0;
-      }
+      (document.getElementById('btn-cargar-puntos') as HTMLButtonElement).disabled = !estado.red_cargada;
+      (document.getElementById('btn-evaluar') as HTMLButtonElement).disabled = !estado.puntos_cargados;
+      (document.getElementById('btn-exportar') as HTMLButtonElement).disabled = estado.algoritmos_ejecutados.length === 0;
     } catch {
       console.error('Error actualizando estado de interfaz');
     }
   }
 }
 
-/**
- * Inicializa la aplicación cuando el DOM está listo.
- * Punto de entrada principal del frontend.
- */
-document.addEventListener('DOMContentLoaded', () => {
-  new Aplicacion();
-});
-
+document.addEventListener('DOMContentLoaded', () => new Aplicacion());
