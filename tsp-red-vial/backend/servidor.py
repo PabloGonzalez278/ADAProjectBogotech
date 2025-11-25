@@ -106,27 +106,59 @@ async def cargar_puntos(archivo: UploadFile = File(...)):
     if not archivo.filename.endswith('.csv'):
         raise HTTPException(400, "El archivo debe ser CSV")
 
-    lineas = (await archivo.read()).decode('utf-8').splitlines()
-    lector = csv.DictReader(lineas)
-    puntos_data = [
-        (int(f['id']), float(f['latitud']), float(f['longitud']), f.get('nombre', f"Punto {f['id']}"))
-        for f in lector
-    ]
+    try:
+        contenido = await archivo.read()
+        lineas = contenido.decode('utf-8').splitlines()
+        lector = csv.DictReader(lineas)
+        
+        puntos_data = []
+        for num_linea, fila in enumerate(lector, start=2):  # start=2 porque la línea 1 es el encabezado
+            try:
+                # Validar que existan los campos requeridos
+                if 'id' not in fila or 'latitud' not in fila or 'longitud' not in fila:
+                    raise HTTPException(
+                        400, 
+                        f"Error en línea {num_linea}: El archivo CSV debe tener las columnas: id, latitud, longitud, nombre"
+                    )
+                
+                punto_id = int(fila['id'])
+                latitud = float(fila['latitud'])
+                longitud = float(fila['longitud'])
+                nombre = fila.get('nombre', f"Punto {punto_id}")
+                
+                puntos_data.append((punto_id, latitud, longitud, nombre))
+            except ValueError as e:
+                raise HTTPException(
+                    400, 
+                    f"Error en línea {num_linea}: Formato inválido. Verifique que 'id' sea un número entero y 'latitud'/'longitud' sean números decimales. Detalle: {str(e)}"
+                )
+            except KeyError as e:
+                raise HTTPException(
+                    400, 
+                    f"Error en línea {num_linea}: Falta la columna requerida: {str(e)}"
+                )
 
-    if len(puntos_data) < 2:
-        raise HTTPException(400, "Se necesitan al menos 2 puntos")
+        if len(puntos_data) < 2:
+            raise HTTPException(400, "Se necesitan al menos 2 puntos")
 
-    resultados_integracion = integrar_multiples_puntos(
-        estado_sistema['grafo'],
-        estado_sistema['nodos_coords'],
-        puntos_data
-    )
+        resultados_integracion = integrar_multiples_puntos(
+            estado_sistema['grafo'],
+            estado_sistema['nodos_coords'],
+            puntos_data
+        )
+        
+        estado_sistema['puntos'] = [Punto(id=p[0], latitud=p[1], longitud=p[2], nombre=p[3]) for p in puntos_data]
+        estado_sistema['nodos_puntos'] = [resultados_integracion[p[0]][0] for p in puntos_data]
+        estado_sistema['puntos_cargados'] = True
+
+        return {"mensaje": "Puntos integrados", "num_puntos": len(puntos_data), "puntos": estado_sistema['puntos']}
     
-    estado_sistema['puntos'] = [Punto(id=p[0], latitud=p[1], longitud=p[2], nombre=p[3]) for p in puntos_data]
-    estado_sistema['nodos_puntos'] = [resultados_integracion[p[0]][0] for p in puntos_data]
-    estado_sistema['puntos_cargados'] = True
-
-    return {"mensaje": "Puntos integrados", "num_puntos": len(puntos_data), "puntos": estado_sistema['puntos']}
+    except HTTPException:
+        raise
+    except UnicodeDecodeError:
+        raise HTTPException(400, "Error: El archivo no está codificado en UTF-8")
+    except Exception as e:
+        raise HTTPException(500, f"Error procesando el archivo: {str(e)}")
 
 
 @app.post("/api/evaluar-algoritmos")
