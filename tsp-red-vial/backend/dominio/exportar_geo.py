@@ -252,6 +252,38 @@ def exportar_comparacion_algoritmos(
         puntos_nombres: Nombres de los puntos
         ruta_archivo: Ruta del archivo de salida
     """
+    geojson_final = generar_geojson_comparacion(
+        resultados,
+        puntos_coords,
+        puntos_nombres
+    )
+    guardar_geojson(geojson_final, ruta_archivo)
+
+
+def generar_geojson_comparacion(
+    resultados: dict,
+    puntos_coords: List[Tuple[float, float]],
+    puntos_nombres: List[str],
+    grafo: nx.Graph = None,
+    nodos_puntos: List[str] = None,
+    nodos_coords: Dict[str, Tuple[float, float]] = None
+) -> dict:
+    """
+    Genera un GeoJSON combinado de múltiples algoritmos TSP en memoria.
+    Asigna colores diferentes a cada algoritmo para visualización.
+
+    Args:
+        resultados: Dict {nombre_algoritmo: (ruta, distancia, stats)} o 
+                   Dict {nombre_algoritmo: ResultadoTSP}
+        puntos_coords: Coordenadas de los puntos
+        puntos_nombres: Nombres de los puntos
+        grafo: Opcional, grafo para camino detallado
+        nodos_puntos: Opcional, nodos correspondientes a puntos
+        nodos_coords: Opcional, coordenadas de todos los nodos
+
+    Returns:
+        Diccionario GeoJSON con todas las rutas combinadas
+    """
     todas_features = []
 
     colores = {
@@ -261,13 +293,24 @@ def exportar_comparacion_algoritmos(
         'vecino_2opt': '#FFA500'
     }
 
-    for nombre_alg, (ruta, distancia, _) in resultados.items():
+    for nombre_alg, resultado in resultados.items():
+        # Manejar tanto el formato antiguo (tupla) como el nuevo (ResultadoTSP)
+        if isinstance(resultado, tuple):
+            ruta, distancia, _ = resultado
+        else:
+            # Asumir que es un objeto con atributos ruta y distancia_total
+            ruta = resultado.ruta if hasattr(resultado, 'ruta') else resultado['ruta']
+            distancia = resultado.distancia_total if hasattr(resultado, 'distancia_total') else resultado['distancia_total']
+
         geojson_ruta = ruta_a_geojson(
             ruta,
             puntos_coords,
             puntos_nombres,
             nombre_alg,
-            distancia
+            distancia,
+            grafo,
+            nodos_puntos,
+            nodos_coords
         )
 
         color = colores.get(nombre_alg, '#0000FF')
@@ -283,5 +326,5 @@ def exportar_comparacion_algoritmos(
         'features': todas_features
     }
 
-    guardar_geojson(geojson_final, ruta_archivo)
+    return geojson_final
 

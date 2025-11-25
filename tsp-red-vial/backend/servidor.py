@@ -5,11 +5,12 @@ Proporciona endpoints REST para cargar datos, ejecutar algoritmos y exportar res
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import JSONResponse, Response
 import csv
 from pathlib import Path
 from datetime import datetime
 from typing import List
+import json
 
 from dominio.modelos import (
     Punto, ResultadoTSP, ComparacionAlgoritmos,
@@ -21,7 +22,7 @@ from dominio.ajustar_puntos import integrar_multiples_puntos, validar_integracio
 from dominio.tsp_fuerza_bruta import tsp_fuerza_bruta
 from dominio.tsp_held_karp import tsp_held_karp
 from dominio.tsp_vecino_2opt import tsp_2opt
-from dominio.exportar_geo import exportar_comparacion_algoritmos
+from dominio.exportar_geo import exportar_comparacion_algoritmos, generar_geojson_comparacion
 from configuracion import config
 
 app = FastAPI(
@@ -197,6 +198,51 @@ async def api_obtener_ruta_detallada(
         raise HTTPException(404, f"Índice de punto fuera de rango.")
     except Exception as e:
         raise HTTPException(500, f"No se pudo calcular la ruta detallada: {e}")
+
+
+@app.get("/api/exportar")
+async def exportar_resultados(formato: str = Query(default='geojson', regex='^(geojson|json)$')):
+    """
+    Exporta los resultados de los algoritmos TSP ejecutados en formato GeoJSON.
+    
+    Args:
+        formato: Formato de exportación ('geojson' o 'json')
+    
+    Returns:
+        Archivo GeoJSON con las rutas de todos los algoritmos ejecutados
+    """
+    if not estado_sistema['puntos_cargados']:
+        raise HTTPException(400, "Primero debe cargar puntos")
+    
+    if len(estado_sistema['resultados_tsp']) == 0:
+        raise HTTPException(400, "No hay resultados de algoritmos para exportar. Ejecute los algoritmos primero.")
+    
+    # Preparar datos para la exportación
+    puntos_coords = [(p.latitud, p.longitud) for p in estado_sistema['puntos']]
+    puntos_nombres = [p.nombre for p in estado_sistema['puntos']]
+    
+    # Generar GeoJSON combinado
+    geojson = generar_geojson_comparacion(
+        estado_sistema['resultados_tsp'],
+        puntos_coords,
+        puntos_nombres,
+        estado_sistema['grafo'],
+        estado_sistema['nodos_puntos'],
+        estado_sistema['nodos_coords']
+    )
+    
+    # Convertir a JSON string con codificación UTF-8
+    geojson_str = json.dumps(geojson, indent=2, ensure_ascii=False)
+    geojson_bytes = geojson_str.encode('utf-8')
+    
+    # Devolver como respuesta con el tipo de contenido apropiado
+    return Response(
+        content=geojson_bytes,
+        media_type="application/geo+json" if formato == 'geojson' else "application/json",
+        headers={
+            "Content-Disposition": f'attachment; filename="resultados_tsp_{datetime.now().strftime("%Y%m%d_%H%M%S")}.geojson"'
+        }
+    )
 
 
 @app.get("/health")
