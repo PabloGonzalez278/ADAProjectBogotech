@@ -10,7 +10,7 @@ echo "--- Iniciando el sistema ---"
 echo "Directorio del Backend: $BACKEND_DIR"
 echo "Directorio del Frontend: $FRONTEND_DIR"
 
-# --- Backend ---
+# --- Backend ---m
 echo "[Backend] Iniciando en una nueva terminal..."
 gnome-terminal --working-directory="$BACKEND_DIR" -- bash -c '
   echo "--- Configurando Backend (en `pwd`) ---"
@@ -19,7 +19,7 @@ gnome-terminal --working-directory="$BACKEND_DIR" -- bash -c '
     python3 -m venv venv
   fi
   echo "Activando entorno virtual..."
-  source venv/bin/activate
+  source venv/bin/activate}}
   echo "Instalando dependencias desde requerimientos.txt..."
   pip install -r requerimientos.txt
   echo "--- Iniciando Servidor Backend en http://localhost:8000 ---"
