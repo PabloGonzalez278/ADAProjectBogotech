@@ -1,5 +1,5 @@
 """
-Configuración del proyecto TSP
+Configuración del proyecto TSP.
 """
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
